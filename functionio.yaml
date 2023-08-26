@@ -1,0 +1,84 @@
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: FunctionIO
+config:
+  apiVersion: database.example.org/v1alpha1
+  kind: Config
+  metadata:
+    name: redis
+  spec:
+    fmt: "redis://:%s@%s.%s:%s"
+    values:
+      - type: fromConnectionSecret
+      - type: FromFieldPath
+
+observed:
+  composite:
+    resource:
+      apiVersion: database.example.org/v1alpha1
+      kind: XPostgreSQLInstance
+      metadata:
+        name: platform-ref-gcp-db-p9wrj
+    connectionDetails:
+    - name: privateIP
+      value: 10.135.0.3
+  resources:
+    - name: redis
+      base:
+        apiVersion: helm.crossplane.io/v1alpha1
+        kind: Release
+        metadata:
+          name: redis
+        spec:
+          forProvider:
+            chart:
+              name: redis
+              repository: oci://registry-1.docker.io/bitnamicharts
+              version: 17.10.1
+            namespace: default
+            values:
+              architecture: standalone
+              auth:
+                enabled: true
+                password: ""
+              metrics:
+                enabled: true
+              master:
+                persistence:
+                  enabled: true
+                  size: 2Gi
+            valuesFrom: []
+            set: []
+          providerConfigRef:
+            name: default
+desired:
+  composite:
+    resource:
+      apiVersion: database.example.org/v1alpha1
+      kind: XPostgreSQLInstance
+      metadata:
+        name: platform-ref-gcp-db-p9wrj
+    connectionDetails:
+    - name: privateIP
+      value: 10.135.0.3
+  resources:
+  - name: db-instance
+    resource:
+      apiVersion: sql.gcp.upbound.io/v1beta1
+      kind: DatabaseInstance
+      metadata:
+        name: platform-ref-gcp-db-p9wrj-tvvtg
+  - name: db-user
+    resource:
+      apiVersion: sql.gcp.upbound.io/v1beta1
+      kind: User
+      metadata:
+        name: platform-ref-gcp-db-p9wrj-z8lpz
+    connectionDetails:
+    - name: password
+      type: FromValue
+      value: very-secret
+    readinessChecks:
+    - type: None
+results:
+- severity: Normal
+  message: "Successfully composed GCP SQL user"
