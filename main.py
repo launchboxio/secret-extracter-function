@@ -1,5 +1,5 @@
 import sys
-
+import json
 import requests
 import yaml
 
@@ -47,7 +47,7 @@ def main():
 
 
     # For now, let's just simply debug the functionIO data
-    requests.post("https://eo3q8bbwd0n2h6j.m.pipedream.net", json=Functionio)
+    requests.post("https://eo3q8bbwd0n2h6j.m.pipedream.net", jsondumps(Functionio))
     write_Functionio(Functionio)
 
 
