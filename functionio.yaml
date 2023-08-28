@@ -1,84 +1,403 @@
-apiVersion: apiextensions.crossplane.io/v1alpha1
-kind: FunctionIO
-config:
-  apiVersion: database.example.org/v1alpha1
-  kind: Config
-  metadata:
-    name: redis
-  spec:
-    fmt: "redis://:%s@%s.%s:%s"
-    values:
-      - type: fromConnectionSecret
-      - type: FromFieldPath
-
+desired:
+  composite:
+    connectionDetails: []
+    resource:
+      apiVersion: addons.launchboxhq.io/v1alpha1
+      kind: LbxRedisCluster
+      metadata:
+        creationTimestamp: "2023-08-10T02:20:51Z"
+        finalizers:
+        - composite.apiextensions.crossplane.io
+        generateName: cache-
+        generation: 14
+        labels:
+          crossplane.io/claim-name: cache
+          crossplane.io/claim-namespace: jovial-ant-zknca
+          crossplane.io/composite: cache-gsc94
+        managedFields:
+        - apiVersion: addons.launchboxhq.io/v1alpha1
+          fieldsType: FieldsV1
+          fieldsV1:
+            f:metadata:
+              f:finalizers:
+                .: {}
+                v:"composite.apiextensions.crossplane.io": {}
+              f:generateName: {}
+              f:labels:
+                .: {}
+                f:crossplane.io/claim-name: {}
+                f:crossplane.io/claim-namespace: {}
+                f:crossplane.io/composite: {}
+            f:spec:
+              .: {}
+              f:claimRef:
+                .: {}
+                f:apiVersion: {}
+                f:kind: {}
+                f:name: {}
+                f:namespace: {}
+              f:compositionRef:
+                .: {}
+                f:name: {}
+              f:compositionRevisionRef:
+                .: {}
+                f:name: {}
+              f:compositionUpdatePolicy: {}
+              f:providerConfigRef: {}
+              f:resourceRefs: {}
+              f:size: {}
+              f:writeConnectionSecretToRef:
+                .: {}
+                f:name: {}
+                f:namespace: {}
+          manager: Go-http-client
+          operation: Update
+          time: "2023-08-28T03:10:29Z"
+        - apiVersion: addons.launchboxhq.io/v1alpha1
+          fieldsType: FieldsV1
+          fieldsV1:
+            f:status:
+              .: {}
+              f:conditions: {}
+          manager: Go-http-client
+          operation: Update
+          subresource: status
+          time: "2023-08-28T03:10:38Z"
+        name: cache-gsc94
+        resourceVersion: "3860659"
+        uid: c99c7431-3962-4f8c-8727-05df71e04ec0
+      spec:
+        claimRef:
+          apiVersion: addons.launchboxhq.io/v1alpha1
+          kind: RedisCluster
+          name: cache
+          namespace: jovial-ant-zknca
+        compositionRef:
+          name: redis
+        compositionRevisionRef:
+          name: redis-b36b719
+        compositionUpdatePolicy: Automatic
+        providerConfigRef: jovial-ant-zknca
+        resourceRefs:
+        - apiVersion: helm.crossplane.io/v1alpha1
+          kind: Release
+          name: cache-gsc94-rrh7s
+        size: 2Gi
+        writeConnectionSecretToRef:
+          name: c99c7431-3962-4f8c-8727-05df71e04ec0
+          namespace: crossplane-system
+      status:
+        conditions:
+        - lastTransitionTime: "2023-08-28T03:10:38Z"
+          message: 'cannot compose resources: cannot run Composition Function pipeline:
+            cannot unmarshal desired composite resource from FunctionIO: unexpected
+            end of JSON input'
+          reason: ReconcileError
+          status: "False"
+          type: Synced
+        - lastTransitionTime: "2023-08-10T02:21:00Z"
+          reason: Available
+          status: "True"
+          type: Ready
+  resources:
+  - name: redis
+    resource:
+      apiVersion: helm.crossplane.io/v1alpha1
+      kind: Release
+      metadata:
+        annotations:
+          crossplane.io/composition-resource-name: redis
+        generateName: cache-gsc94-
+        labels:
+          crossplane.io/claim-name: cache
+          crossplane.io/claim-namespace: jovial-ant-zknca
+          crossplane.io/composite: cache-gsc94
+        name: cache-gsc94-rrh7s
+        ownerReferences:
+        - apiVersion: addons.launchboxhq.io/v1alpha1
+          blockOwnerDeletion: true
+          controller: true
+          kind: LbxRedisCluster
+          name: cache-gsc94
+          uid: c99c7431-3962-4f8c-8727-05df71e04ec0
+      spec:
+        forProvider:
+          chart:
+            name: redis
+            repository: oci://registry-1.docker.io/bitnamicharts
+            version: 17.10.1
+          namespace: default
+          set: []
+          values:
+            architecture: standalone
+            auth:
+              enabled: true
+              password: ""
+            master:
+              persistence:
+                enabled: true
+                size: 2Gi
+            metrics:
+              enabled: true
+          valuesFrom: []
+        providerConfigRef:
+          name: jovial-ant-zknca
 observed:
   composite:
     resource:
-      apiVersion: database.example.org/v1alpha1
-      kind: XPostgreSQLInstance
+      apiVersion: addons.launchboxhq.io/v1alpha1
+      kind: LbxRedisCluster
       metadata:
-        name: platform-ref-gcp-db-p9wrj
-    connectionDetails:
-    - name: privateIP
-      value: 10.135.0.3
-  resources:
-    - name: redis
-      base:
-        apiVersion: helm.crossplane.io/v1alpha1
-        kind: Release
-        metadata:
+        creationTimestamp: "2023-08-10T02:20:51Z"
+        finalizers:
+        - composite.apiextensions.crossplane.io
+        generateName: cache-
+        generation: 14
+        labels:
+          crossplane.io/claim-name: cache
+          crossplane.io/claim-namespace: jovial-ant-zknca
+          crossplane.io/composite: cache-gsc94
+        managedFields:
+        - apiVersion: addons.launchboxhq.io/v1alpha1
+          fieldsType: FieldsV1
+          fieldsV1:
+            f:metadata:
+              f:finalizers:
+                .: {}
+                v:"composite.apiextensions.crossplane.io": {}
+              f:generateName: {}
+              f:labels:
+                .: {}
+                f:crossplane.io/claim-name: {}
+                f:crossplane.io/claim-namespace: {}
+                f:crossplane.io/composite: {}
+            f:spec:
+              .: {}
+              f:claimRef:
+                .: {}
+                f:apiVersion: {}
+                f:kind: {}
+                f:name: {}
+                f:namespace: {}
+              f:compositionRef:
+                .: {}
+                f:name: {}
+              f:compositionRevisionRef:
+                .: {}
+                f:name: {}
+              f:compositionUpdatePolicy: {}
+              f:providerConfigRef: {}
+              f:resourceRefs: {}
+              f:size: {}
+              f:writeConnectionSecretToRef:
+                .: {}
+                f:name: {}
+                f:namespace: {}
+          manager: Go-http-client
+          operation: Update
+          time: "2023-08-28T03:10:29Z"
+        - apiVersion: addons.launchboxhq.io/v1alpha1
+          fieldsType: FieldsV1
+          fieldsV1:
+            f:status:
+              .: {}
+              f:conditions: {}
+          manager: Go-http-client
+          operation: Update
+          subresource: status
+          time: "2023-08-28T03:10:38Z"
+        name: cache-gsc94
+        resourceVersion: "3860659"
+        uid: c99c7431-3962-4f8c-8727-05df71e04ec0
+      spec:
+        claimRef:
+          apiVersion: addons.launchboxhq.io/v1alpha1
+          kind: RedisCluster
+          name: cache
+          namespace: jovial-ant-zknca
+        compositionRef:
           name: redis
-        spec:
-          forProvider:
-            chart:
-              name: redis
-              repository: oci://registry-1.docker.io/bitnamicharts
-              version: 17.10.1
-            namespace: default
-            values:
-              architecture: standalone
-              auth:
-                enabled: true
-                password: ""
-              metrics:
-                enabled: true
-              master:
-                persistence:
-                  enabled: true
-                  size: 2Gi
-            valuesFrom: []
-            set: []
-          providerConfigRef:
-            name: default
-desired:
-  composite:
-    resource:
-      apiVersion: database.example.org/v1alpha1
-      kind: XPostgreSQLInstance
-      metadata:
-        name: platform-ref-gcp-db-p9wrj
-    connectionDetails:
-    - name: privateIP
-      value: 10.135.0.3
+        compositionRevisionRef:
+          name: redis-b36b719
+        compositionUpdatePolicy: Automatic
+        providerConfigRef: jovial-ant-zknca
+        resourceRefs:
+        - apiVersion: helm.crossplane.io/v1alpha1
+          kind: Release
+          name: cache-gsc94-rrh7s
+        size: 2Gi
+        writeConnectionSecretToRef:
+          name: c99c7431-3962-4f8c-8727-05df71e04ec0
+          namespace: crossplane-system
+      status:
+        conditions:
+        - lastTransitionTime: "2023-08-28T03:10:38Z"
+          message: 'cannot compose resources: cannot run Composition Function pipeline:
+            cannot unmarshal desired composite resource from FunctionIO: unexpected
+            end of JSON input'
+          reason: ReconcileError
+          status: "False"
+          type: Synced
+        - lastTransitionTime: "2023-08-10T02:21:00Z"
+          reason: Available
+          status: "True"
+          type: Ready
   resources:
-  - name: db-instance
+  - connectionDetails: []
+    name: redis
     resource:
-      apiVersion: sql.gcp.upbound.io/v1beta1
-      kind: DatabaseInstance
+      apiVersion: helm.crossplane.io/v1alpha1
+      kind: Release
       metadata:
-        name: platform-ref-gcp-db-p9wrj-tvvtg
-  - name: db-user
-    resource:
-      apiVersion: sql.gcp.upbound.io/v1beta1
-      kind: User
-      metadata:
-        name: platform-ref-gcp-db-p9wrj-z8lpz
-    connectionDetails:
-    - name: password
-      type: FromValue
-      value: very-secret
-    readinessChecks:
-    - type: None
-results:
-- severity: Normal
-  message: "Successfully composed GCP SQL user"
+        annotations:
+          crossplane.io/composition-resource-name: redis
+          crossplane.io/external-create-pending: "2023-08-22T17:57:34Z"
+          crossplane.io/external-create-succeeded: "2023-08-22T17:57:36Z"
+          crossplane.io/external-name: cache-gsc94-rrh7s
+        creationTimestamp: "2023-08-10T02:20:51Z"
+        finalizers:
+        - finalizer.managedresource.crossplane.io
+        generateName: cache-gsc94-
+        generation: 9
+        labels:
+          crossplane.io/claim-name: cache
+          crossplane.io/claim-namespace: jovial-ant-zknca
+          crossplane.io/composite: cache-gsc94
+        managedFields:
+        - apiVersion: helm.crossplane.io/v1beta1
+          fieldsType: FieldsV1
+          fieldsV1:
+            f:metadata:
+              f:annotations:
+                f:crossplane.io/external-create-pending: {}
+                f:crossplane.io/external-create-succeeded: {}
+                f:crossplane.io/external-name: {}
+              f:finalizers:
+                .: {}
+                v:"finalizer.managedresource.crossplane.io": {}
+            f:spec:
+              f:forProvider:
+                f:chart:
+                  f:pullSecretRef:
+                    .: {}
+                    f:name: {}
+                    f:namespace: {}
+          manager: provider-helm
+          operation: Update
+          time: "2023-08-22T17:57:36Z"
+        - apiVersion: helm.crossplane.io/v1alpha1
+          fieldsType: FieldsV1
+          fieldsV1:
+            f:metadata:
+              f:annotations:
+                .: {}
+                f:crossplane.io/composition-resource-name: {}
+              f:generateName: {}
+              f:labels:
+                .: {}
+                f:crossplane.io/claim-name: {}
+                f:crossplane.io/claim-namespace: {}
+                f:crossplane.io/composite: {}
+              f:ownerReferences:
+                .: {}
+                k:{"uid":"c99c7431-3962-4f8c-8727-05df71e04ec0"}: {}
+            f:spec:
+              .: {}
+              f:deletionPolicy: {}
+              f:forProvider:
+                .: {}
+                f:chart:
+                  .: {}
+                  f:name: {}
+                  f:repository: {}
+                  f:version: {}
+                f:namespace: {}
+                f:values:
+                  .: {}
+                  f:architecture: {}
+                  f:auth:
+                    .: {}
+                    f:enabled: {}
+                    f:password: {}
+                  f:master:
+                    .: {}
+                    f:persistence:
+                      .: {}
+                      f:enabled: {}
+                      f:size: {}
+                  f:metrics:
+                    .: {}
+                    f:enabled: {}
+              f:providerConfigRef:
+                .: {}
+                f:name: {}
+          manager: Go-http-client
+          operation: Update
+          time: "2023-08-22T17:57:37Z"
+        - apiVersion: helm.crossplane.io/v1beta1
+          fieldsType: FieldsV1
+          fieldsV1:
+            f:status:
+              .: {}
+              f:atProvider:
+                .: {}
+                f:releaseDescription: {}
+                f:revision: {}
+                f:state: {}
+              f:conditions: {}
+              f:synced: {}
+          manager: provider-helm
+          operation: Update
+          subresource: status
+          time: "2023-08-24T02:26:04Z"
+        name: cache-gsc94-rrh7s
+        ownerReferences:
+        - apiVersion: addons.launchboxhq.io/v1alpha1
+          blockOwnerDeletion: true
+          controller: true
+          kind: LbxRedisCluster
+          name: cache-gsc94
+          uid: c99c7431-3962-4f8c-8727-05df71e04ec0
+        resourceVersion: "3535291"
+        uid: 1be2d13c-ce6e-4ecc-b5c8-8c6ecf16d69b
+      spec:
+        deletionPolicy: Delete
+        forProvider:
+          chart:
+            name: redis
+            pullSecretRef:
+              name: ""
+              namespace: ""
+            repository: oci://registry-1.docker.io/bitnamicharts
+            version: 17.10.1
+          namespace: default
+          set: []
+          values:
+            architecture: standalone
+            auth:
+              enabled: true
+              password: ""
+            master:
+              persistence:
+                enabled: true
+                size: 2Gi
+            metrics:
+              enabled: true
+          valuesFrom: []
+        providerConfigRef:
+          name: jovial-ant-zknca
+      status:
+        atProvider:
+          releaseDescription: Install complete
+          revision: 1
+          state: deployed
+        conditions:
+        - lastTransitionTime: "2023-08-22T17:57:37Z"
+          reason: Available
+          status: "True"
+          type: Ready
+        - lastTransitionTime: "2023-08-24T02:26:04Z"
+          reason: ReconcileSuccess
+          status: "True"
+          type: Synced
+        synced: true
