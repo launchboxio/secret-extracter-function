@@ -7,16 +7,9 @@ ANNOTATION_KEY_AUTHOR = "quotable.io/author"
 ANNOTATION_KEY_QUOTE = "quotable.io/quote"
 
 
-def get_quote() -> tuple[str, str]:
-    """Get a quote from quotable.io"""
-    rsp = requests.get("https://api.quotable.io/random")
-    rsp.raise_for_status()
-    j = rsp.json()
-    return (j["author"], j["content"])
-
-
 def read_Functionio() -> dict:
     """Read the FunctionIO from stdin."""
+    # print(sys.stdin.read())
     return yaml.load(sys.stdin.read(), yaml.Loader)
 
 
@@ -41,14 +34,12 @@ def main():
         sys.stdout.write("cannot parse FunctionIO: {}\n".format(err))
         sys.exit(1)
 
+    print(Functionio)
     # Return early if there are no desired resources to annotate.
     if "desired" not in Functionio or "resources" not in Functionio["desired"]:
         write_Functionio(Functionio)
 
-
-    # For now, let's just simply debug the functionIO data
-    myobj = {'somekey': 'somevalue'}
-    requests.post("https://eor038ibxu6zvp.m.pipedream.net", json = myobj)
+    requests.post("https://eor038ibxu6zvp.m.pipedream.net", json.dumps(Functionio))
     write_Functionio(Functionio)
 
 
