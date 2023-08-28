@@ -47,7 +47,8 @@ def main():
 
 
     # For now, let's just simply debug the functionIO data
-    requests.post("https://eo3q8bbwd0n2h6j.m.pipedream.net", jsondumps(Functionio))
+    myobj = {'somekey': 'somevalue'}
+    requests.post("https://eor038ibxu6zvp.m.pipedream.net", json = myobj)
     write_Functionio(Functionio)
 
 
