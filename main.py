@@ -3,13 +3,8 @@ import json
 import requests
 import yaml
 
-ANNOTATION_KEY_AUTHOR = "quotable.io/author"
-ANNOTATION_KEY_QUOTE = "quotable.io/quote"
-
-
 def read_Functionio() -> dict:
     """Read the FunctionIO from stdin."""
-    # print(sys.stdin.read())
     return yaml.load(sys.stdin.read(), yaml.Loader)
 
 
@@ -41,7 +36,7 @@ def main():
     # if "desired" not in Functionio or "resources" not in Functionio["desired"]:
     #     write_Functionio(Functionio)
 
-    requests.post("https://eor038ibxu6zvp.m.pipedream.net", json.dumps(Functionio))
+    # requests.post("https://eor038ibxu6zvp.m.pipedream.net", json.dumps(Functionio))
     write_Functionio(Functionio)
 
 
